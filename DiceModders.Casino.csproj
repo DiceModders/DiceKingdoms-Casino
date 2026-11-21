@@ -1,0 +1,46 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <AssemblyName>DiceModders.Casino</AssemblyName>
+    <RootNamespace>DiceModders.Casino</RootNamespace>
+    <Description>A Casino for Dice Kingdoms: a new building where you can spin a wheel of fortune once in a while, with good and bad outcomes. A lobby rule.</Description>
+    <Version>1.0.0</Version>
+    <Authors>DiceModders</Authors>
+    <LangVersion>latest</LangVersion>
+    <Nullable>disable</Nullable>
+    <ImplicitUsings>disable</ImplicitUsings>
+    <RestoreAdditionalProjectSources>https://api.nuget.org/v3/index.json;https://nuget.bepinex.dev/v3/index.json</RestoreAdditionalProjectSources>
+  </PropertyGroup>
+
+  <!-- Debug (scripts\build.ps1 -Dev) defines DEVLOG: extra diagnostics that normal releases do not contain -->
+  <PropertyGroup Condition="'$(Configuration)' == 'Debug'">
+    <DefineConstants>$(DefineConstants);DEVLOG</DefineConstants>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="BepInEx.Unity.IL2CPP" Version="6.0.0-be.*" IncludeAssets="compile" />
+    <!-- interop: junction to <game>\BepInEx\interop; libs: the installed libraries (both made by scripts\build.ps1) -->
+    <Reference Include="$(MSBuildThisFileDirectory)interop/*.dll" Private="false" />
+    <Reference Include="DiceModders.ModCore" HintPath="$(MSBuildThisFileDirectory)libs/DiceModders.ModCore.dll" Private="false" />
+    <Reference Include="DiceModders.UiKit" HintPath="$(MSBuildThisFileDirectory)libs/DiceModders.UiKit.dll" Private="false" />
+  </ItemGroup>
+
+  <!-- reproducible: the same code gives the same DLL on every computer (ModCore compares DLL fingerprints in the lobby) -->
+  <PropertyGroup>
+    <Deterministic>true</Deterministic>
+    <PathMap>$(MSBuildProjectDirectory)\=/_/</PathMap>
+    <IncludeSourceRevisionInInformationalVersion>false</IncludeSourceRevisionInInformationalVersion>
+    <EnableSourceLink>false</EnableSourceLink>
+    <EmbedUntrackedSources>false</EmbedUntrackedSources>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="texts.json" LogicalName="texts.json" />
+    <!-- the Casino model of every building style (made outside the game, plain .dkmesh text, gzipped) -->
+    <EmbeddedResource Include="assets/models/*.dkmesh.gz" LogicalName="models/%(Filename)%(Extension)" />
+  </ItemGroup>
+
+</Project>
+
