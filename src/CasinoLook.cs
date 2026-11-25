@@ -111,15 +111,43 @@ internal static class CasinoLook
         var first = copy.icons != null && copy.icons.Length > 0 ? copy.icons[0] : null;
         int w = first != null ? Mathf.RoundToInt(first.rect.width) : 256, h = first != null ? Mathf.RoundToInt(first.rect.height) : 256;
         var target = copy;
-        Tools.IconRenderer.PlayerColours(Plugin.Guid + " casino-" + style, copy.gameObject, Tools.IconView.Building, w, h, sprites =>
+        string iconName = Plugin.Guid + " casino-" + style;
+        Tools.IconRenderer.PlayerColours(iconName, copy.gameObject, Tools.IconView.Building, w, h, sprites =>
         {
             if (target == null || sprites == null) return;
-            int n = target.icons != null ? target.icons.Length : sprites.Length;
+            var old = target.icons;   // the market's icons: their sizes in texts are copied
+            int n = old != null ? old.Length : sprites.Length;
             var icons = new Il2CppReferenceArray<Sprite>(n);
-            for (int i = 0; i < n; i++) icons[i] = i < sprites.Length ? sprites[i] : (target.icons != null ? target.icons[i] : null);
+            for (int i = 0; i < n; i++) icons[i] = i < sprites.Length ? sprites[i] : (old != null ? old[i] : null);
             target.icons = icons;
+            TextPictures(iconName, sprites, old);
         });
         return copy;
+    }
+
+    private static readonly HashSet<string> TextPicturesDone = new();
+
+    /// <summary>
+    /// The game writes a building into texts (the build bar's tooltip, the event log) as <c>&lt;sprite name="..."&gt;</c> with its icon's name; the
+    /// Casino's icons are added to the texts' pictures, each the size of the market icon it replaces, so the tooltip shows the picture, not the tag.
+    /// </summary>
+    private static void TextPictures(string iconName, Sprite[] sprites, Il2CppReferenceArray<Sprite> like)
+    {
+        try
+        {
+            if (!TextPicturesDone.Add(iconName)) return;
+            var entries = new List<Tools.TextSprites.Entry>();
+            for (int i = 0; i < sprites.Length; i++)
+            {
+                var s = sprites[i];
+                var l = like != null && like.Length > 0 ? like[Math.Min(i, like.Length - 1)] : null;
+                if (s == null || l == null) continue;
+                entries.Add(new Tools.TextSprites.Entry(s.name, l.name, () => Tools.Sprites.ReadableCopy(s)));
+            }
+            int added = Tools.TextSprites.AddLike(iconName + " Text", entries, Tools.IconRenderer.CacheKey(iconName));
+            Plugin.L.LogInfo($"casino look: {added} text pictures for '{iconName}'");
+        }
+        catch (Exception e) { Plugin.L.LogError("casino look: text pictures failed: " + e.Message); }
     }
 
     /// <summary>The style of a market prefab: Japan's and the reskin's models are named "custom-...", the game's by their group ("market-viking-mesh_LOD0").</summary>

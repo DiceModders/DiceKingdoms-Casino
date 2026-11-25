@@ -35,9 +35,9 @@ internal static class Casino
 
     internal static void Install(Patcher patcher)
     {
+        // the tick and the numbers are edited in the Casino's own window (Settings > Lobby > Casino > Casino settings), not in the rules list
         _on = Core.Lobby.Rules.Toggle("casino.on", "Casino", false,
-            "Adds the Casino, a building (one per island, needs a University) where you can spin a wheel of fortune once in a while: good and bad outcomes.");
-        // the numbers are edited in their own window (Settings > Lobby > Casino > Wheel settings), not in the rules list
+            "Adds the Casino, a building (needs a University) where you can spin a wheel of fortune once in a while: good and bad outcomes.", () => false);
         _jackpot = Core.Lobby.Rules.Number("casino.jackpot", "Jackpot chance (%)", 5, 0, 30, 5, "Chance of a tsunami on every other player.", () => false);
         _win = Core.Lobby.Rules.Number("casino.win", "Win chance (%)", 15, 0, 60, 5, "Chance of winning gold or some of each resource.", () => false);
         _bad = Core.Lobby.Rules.Number("casino.bad", "Bad luck chance (%)", 30, 0, 60, 5, "Chance of robbers from another island or a fire on your island.", () => false);

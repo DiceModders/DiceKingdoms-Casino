@@ -6,7 +6,7 @@
     <AssemblyName>DiceModders.Casino</AssemblyName>
     <RootNamespace>DiceModders.Casino</RootNamespace>
     <Description>A Casino for Dice Kingdoms: a new building where you can spin a wheel of fortune once in a while, with good and bad outcomes. A lobby rule.</Description>
-    <Version>1.0.0</Version>
+    <Version>1.0.1</Version>
     <Authors>DiceModders</Authors>
     <LangVersion>latest</LangVersion>
     <Nullable>disable</Nullable>

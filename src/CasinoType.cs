@@ -17,7 +17,8 @@ using Core = DiceModders.ModCore.ModCore;
 ///  * BuildingTypes.Init postfix: append to Types and typesByName (the game calls Init when its data loads).
 ///  * BuildingSerialization.Awake postfix: its type -> index table includes the Casino.
 ///  * BuildInterface.InitBuildingButtons prefix: the build bar gets a Casino button while the rule is on.
-///  * BuildData.CanBuildType postfix: only while the rule is on, and one Casino per island (same check on every computer).
+///  * BuildData.CanBuildType postfix: only while the rule is on, only with a University (same check on every computer). How many Casinos an
+///    island may have is the Building limits mod's business (its Casino number, 1 by default, while its rule is on).
 /// Its name is BuildingTypeName 24, so the game's texts are "building.24.name" / ".effect" / ".lore" (texts.json, gamekey:).
 /// </summary>
 internal static class CasinoType
@@ -39,6 +40,8 @@ internal static class CasinoType
         // per original type) and, at match start, reads it for EVERY type in Types: the Casino has no entry -> KeyNotFoundException, the match
         // never starts (2026-11-21). Give it the Market's number (1) before the game reads the table.
         patcher.Patch(typeof(PoolingBuffering.__c__DisplayClass4_0), "_Awake_b__0", typeof(CasinoType), prefix: nameof(PoolingPrefix));
+        // one Casino per island by default where the host can limit buildings (the Building limits mod reads it; the host can change it)
+        Core.Buildings.SuggestLimit(Name, 1);
         // the game's data may already be loaded (the type list made) before this mod: add it to what exists
         Core.Civilizations.GameDataLoaded += AddToExisting;
         AddToExisting();
@@ -147,7 +150,7 @@ internal static class CasinoType
         catch (Exception e) { Plugin.Once("buttons", "casino button: " + e); }
     }
 
-    /// <summary>Only while the rule is on, and one Casino per island. Runs on every computer at the same step (DoAction), so all agree.</summary>
+    /// <summary>Only while the rule is on, and only with a University. Runs on every computer at the same step (DoAction), so all agree.</summary>
     public static void CanBuildPostfix(BuildData __instance, BuildingType __0, ref bool __result)
     {
         try
@@ -157,7 +160,7 @@ internal static class CasinoType
             var island = __instance.Island;
             if (island?.Owner == null || island.Owner.IsAI) { __result = false; return; }   // computer players do not gamble
             var grid = island.grid;
-            if (grid == null || Count(grid) > 0 || !HasUniversity(grid)) __result = false;   // one per island, and only with a University
+            if (grid == null || !HasUniversity(grid)) __result = false;   // only with a University (no limit of its own: see the Building limits mod)
         }
         catch (Exception e) { Plugin.Once("canbuild", "casino limit: " + e); }
     }

@@ -5,7 +5,9 @@ give nothing or bring bad luck; a few win resources, and a rare jackpot sends a 
 
 ## The Casino
 
-- Takes 4 tiles like the Market. **One per island**, and only with a **University** on the island (locked in the build bar until then).
+- Takes 4 tiles like the Market. Only with a **University** on the island (locked in the build bar until then). No limit of its own: with the
+  [Building limits](https://github.com/DiceModders/DiceKingdoms-BuildingLimits) rule on, the host sets how many an island may have (1 by default).
+  The wheel is one per island however many Casinos it has.
 - Costs 3 wood, 2 stone, 2 gold and 1 hammer. Burnt by an attacker, it gives him 3 gold.
 - Every civilization has its own Casino model: Europe, Middle East, Viking, Ancient, Maya, and the Japan and Europe Reskin civilizations of their mods.
   A civilization from another mod gets the European one.
@@ -29,8 +31,8 @@ Select your Casino: the tech tree button next to the pickaxe turns into the whee
 
 ## Lobby rules
 
-In the lobby's rules list *Casino* is a tick. The wheel's numbers are in **Settings > Lobby > Casino > Wheel settings** (the host edits, everybody else
-sees the host's values), with a picture of the wheel they make:
+The Casino's on/off tick and the wheel's numbers are in **Settings > Lobby > Casino > Casino settings** (the host edits, everybody else sees the
+host's values), with a picture of the wheel they make:
 
 | Setting | Default |
 | --- | --- |
@@ -44,7 +46,7 @@ Every player in the match needs this mod (ModCore compares the mods in the lobby
 
 ## Install
 
-Needs BepInEx 6 (IL2CPP), [ModCore](https://github.com/DiceModders/DiceKingdoms-ModCore) 1.2.0 or newer, [UiKit](https://github.com/DiceModders/UiKit) and [ModBridge](https://github.com/DiceModders/DiceKingdoms-ModBridge). Put `DiceModders.Casino.dll` into `BepInEx\plugins`, with the game closed.
+Needs BepInEx 6 (IL2CPP), [ModCore](https://github.com/DiceModders/DiceKingdoms-ModCore) 1.3.0 or newer, [UiKit](https://github.com/DiceModders/UiKit) and [ModBridge](https://github.com/DiceModders/DiceKingdoms-ModBridge). Put `DiceModders.Casino.dll` into `BepInEx\plugins`, with the game closed.
 
 ## Build
 

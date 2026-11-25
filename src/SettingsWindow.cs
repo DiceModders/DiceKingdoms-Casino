@@ -13,9 +13,9 @@ namespace DiceModders.Casino;
 using Core = DiceModders.ModCore.ModCore;
 
 /// <summary>
-/// The wheel's settings in their own window (Settings > Lobby > Casino > Wheel settings), so the rules list stays short: the chances and the amounts
-/// with - / + and "Default", and a picture of the wheel those chances make. The host edits; everybody else sees the host's numbers. The numbers are
-/// lobby rules (hidden in the rules list), so ModCore sends them to everybody and freezes them for the match. Redraws when a number changes.
+/// The Casino's settings in their own window (Settings > Lobby > Casino > Casino settings), so the rules list stays short: the on/off tick, the
+/// chances and the amounts with - / + and "Default", and a picture of the wheel those chances make. The host edits; everybody else sees the host's
+/// values. They are lobby rules (hidden in the rules list), so ModCore sends them to everybody and freezes them for the match. Redraws when one changes.
 /// </summary>
 internal static class SettingsWindow
 {
@@ -25,6 +25,7 @@ internal static class SettingsWindow
     private static UiScope _ui;
     private static UiWindow _win;
     private static UiImage _wheel;
+    private static UiToggle _on;
     private static UiText _status, _sum;
     private static Texture2D _texture;
     private static Wheel.Outcome[] _drawn;
@@ -55,8 +56,16 @@ internal static class SettingsWindow
         _win = _ui?.Custom.Window(w =>
         {
             w.Title(Tx.T("settings.title")).Size(560f, 780f).Position(100f, 40f).Draggable().Closable();
-            w.OnClose(() => { _win = null; _wheel = null; _status = _sum = null; Refreshers.Clear(); EditButtons.Clear(); });
+            w.OnClose(() => { _win = null; _wheel = null; _on = null; _status = _sum = null; Refreshers.Clear(); EditButtons.Clear(); });
             w.Body.Spacing(4f);
+            _on = w.Body.Toggle(Casino.Rule.Title, Casino.Rule.Live, v =>
+            {
+                if (!Casino.Rule.TrySet(v) && _status != null) _status.Value = Tx.T("settings.hostOnly");
+                Refresh();   // snaps back when the change was refused
+            });
+            var about = Casino.Rule.Description;
+            if (!string.IsNullOrEmpty(about)) w.Body.Paragraph(about);
+            w.Body.Separator();
             _status = w.Body.Paragraph("");
             _wheel = w.Body.Image(null);
             var layout = _wheel?.Root?.GetComponent<LayoutElement>();
@@ -112,6 +121,7 @@ internal static class SettingsWindow
     {
         if (_win == null) return;
         bool edit = Casino.Rule.Editable;
+        _on?.Set(Casino.Rule.Live).Interactable(edit);
         foreach (var b in EditButtons) b?.Interactable(edit);
         foreach (var r in Refreshers) r();   // after: a full 100 % turns the chances' + off
         if (_status != null)

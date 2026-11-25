@@ -5,12 +5,12 @@
   "group.casino.title": { "en": "Casino", "de": "Kasino", "fr": "Casino", "ru": "Казино", "uk": "Казино", "zh-CN": "赌场" },
   "rule.casino.on.title": { "en": "Casino", "de": "Kasino", "fr": "Casino", "ru": "Казино", "uk": "Казино", "zh-CN": "赌场" },
   "rule.casino.on.description": {
-    "en": "Adds the Casino, a building (one per island, needs a University) where you can spin a wheel of fortune once in a while: good and bad outcomes.",
-    "de": "Fügt das Kasino hinzu, ein Gebäude (eines pro Insel, braucht eine Universität), in dem du ab und zu ein Glücksrad drehen kannst: gute und schlechte Ergebnisse.",
-    "fr": "Ajoute le Casino, un bâtiment (un par île, demande une université) où vous pouvez de temps en temps faire tourner une roue de la fortune : bons et mauvais résultats.",
-    "ru": "Добавляет Казино — здание (одно на остров, нужен университет), где время от времени можно крутить колесо фортуны: с хорошими и плохими исходами.",
-    "uk": "Додає Казино — будівлю (одну на острів, потрібен університет), де час від часу можна крутити колесо фортуни: з добрими й поганими наслідками.",
-    "zh-CN": "加入赌场：一种建筑（每座岛一座，需要大学），可以不时转动命运之轮，结果有好有坏。"
+    "en": "Adds the Casino, a building (needs a University) where you can spin a wheel of fortune once in a while: good and bad outcomes.",
+    "de": "Fügt das Kasino hinzu, ein Gebäude (braucht eine Universität), in dem du ab und zu ein Glücksrad drehen kannst: gute und schlechte Ergebnisse.",
+    "fr": "Ajoute le Casino, un bâtiment (demande une université) où vous pouvez de temps en temps faire tourner une roue de la fortune : bons et mauvais résultats.",
+    "ru": "Добавляет Казино — здание (нужен университет), где время от времени можно крутить колесо фортуны: с хорошими и плохими исходами.",
+    "uk": "Додає Казино — будівлю (потрібен університет), де час від часу можна крутити колесо фортуни: з добрими й поганими наслідками.",
+    "zh-CN": "加入赌场：一种建筑（需要大学），可以不时转动命运之轮，结果有好有坏。"
   },
   "rule.casino.jackpot.title": { "en": "Jackpot chance (%)", "de": "Jackpot-Chance (%)", "fr": "Chance de jackpot (%)", "ru": "Шанс джекпота (%)", "uk": "Шанс джекпоту (%)", "zh-CN": "大奖概率（%）" },
   "rule.casino.jackpot.description": { "en": "Chance of a tsunami on every other player.", "de": "Chance auf einen Tsunami auf jeden anderen Spieler.", "fr": "Chance d'un tsunami sur chaque autre joueur.", "ru": "Шанс цунами на каждого другого игрока.", "uk": "Шанс цунамі на кожного іншого гравця.", "zh-CN": "对其他每位玩家发动海啸的概率。" },
@@ -31,12 +31,12 @@
 
   "gamekey:building.24.name": { "en": "Casino", "de": "Kasino", "fr": "Casino", "ru": "Казино", "uk": "Казино", "zh-CN": "赌场" },
   "gamekey:building.24.effect": {
-    "en": "Spin the wheel of fortune now and then: win resources or send a tsunami to everyone else, or bring a disaster on yourself. One Casino per island.",
-    "de": "Drehe ab und zu das Glücksrad: gewinne Rohstoffe oder schicke allen anderen einen Tsunami, oder bringe ein Unglück über dich selbst. Ein Kasino pro Insel.",
-    "fr": "Faites tourner la roue de la fortune de temps en temps : gagnez des ressources ou envoyez un tsunami à tous les autres, ou attirez un désastre sur vous. Un casino par île.",
-    "ru": "Время от времени крутите колесо фортуны: выигрывайте ресурсы или отправьте цунами всем остальным — или навлеките беду на себя. Одно казино на остров.",
-    "uk": "Час від часу крутіть колесо фортуни: вигравайте ресурси або надішліть цунамі всім іншим — чи накличте лихо на себе. Одне казино на острів.",
-    "zh-CN": "不时转动命运之轮：赢取资源或向其他所有人发动海啸，也可能给自己招来灾祸。每座岛一座赌场。"
+    "en": "Spin the wheel of fortune now and then: win resources or send a tsunami to everyone else, or bring a disaster on yourself.",
+    "de": "Drehe ab und zu das Glücksrad: gewinne Rohstoffe oder schicke allen anderen einen Tsunami, oder bringe ein Unglück über dich selbst.",
+    "fr": "Faites tourner la roue de la fortune de temps en temps : gagnez des ressources ou envoyez un tsunami à tous les autres, ou attirez un désastre sur vous.",
+    "ru": "Время от времени крутите колесо фортуны: выигрывайте ресурсы или отправьте цунами всем остальным — или навлеките беду на себя.",
+    "uk": "Час від часу крутіть колесо фортуни: вигравайте ресурси або надішліть цунамі всім іншим — чи накличте лихо на себе.",
+    "zh-CN": "不时转动命运之轮：赢取资源或向其他所有人发动海啸，也可能给自己招来灾祸。"
   },
   "gamekey:building.24.lore": {
     "en": "Fortune favours the bold, sometimes.",
@@ -48,7 +48,7 @@
   },
 
   "settings.block": { "en": "Casino", "de": "Kasino", "fr": "Casino", "ru": "Казино", "uk": "Казино", "zh-CN": "赌场" },
-  "settings.title": { "en": "Wheel settings", "de": "Glücksrad-Einstellungen", "fr": "Réglages de la roue", "ru": "Настройки колеса", "uk": "Налаштування колеса", "zh-CN": "轮盘设置" },
+  "settings.title": { "en": "Casino settings", "de": "Kasino-Einstellungen", "fr": "Réglages du casino", "ru": "Настройки казино", "uk": "Налаштування казино", "zh-CN": "赌场设置" },
   "settings.open": { "en": "Open", "de": "Öffnen", "fr": "Ouvrir", "ru": "Открыть", "uk": "Відкрити", "zh-CN": "打开" },
   "settings.default": { "en": "Default", "de": "Standard", "fr": "Défaut", "ru": "По умолч.", "uk": "Типово", "zh-CN": "默认" },
   "settings.allDefault": { "en": "All back to default", "de": "Alles auf Standard", "fr": "Tout par défaut", "ru": "Всё по умолчанию", "uk": "Усе типово", "zh-CN": "全部恢复默认" },

@@ -10,7 +10,7 @@ using Core = DiceModders.ModCore.ModCore;   // inside DiceModders.* the bare nam
 using Ui = DiceModders.UiKit.UiKit;
 
 /// <summary>
-/// DiceKingdoms Casino: a lobby rule (off by default) that adds the Casino, a new building (one per island) with a wheel of fortune.
+/// DiceKingdoms Casino: a lobby rule (off by default) that adds the Casino, a new building with a wheel of fortune.
 /// The building type is added to the game's own type list on every computer; everything reacts to the game's own steps.
 /// </summary>
 [BepInPlugin(Guid, Name, Version)]
@@ -21,7 +21,7 @@ public sealed class Plugin : BasePlugin
 {
     public const string Guid = "org.dicemodders.dicekingdoms.casino";
     public const string Name = "DiceKingdoms Casino";
-    public const string Version = "1.0.0";
+    public const string Version = "1.0.1";
 
     internal static ManualLogSource L;
     /// <summary>The mod's own switch ([General] Enabled).</summary>
