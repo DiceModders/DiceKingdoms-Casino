@@ -70,7 +70,12 @@ internal static class WheelWindow
     {
         if (_window != null || !Casino.On) return;
         var faces = Wheel.Faces;
-        if (_wheelTexture == null || _texturedFaces != faces) { _wheelTexture = WheelArt.Disc(384, faces); _texturedFaces = faces; }
+        if (_wheelTexture == null || _texturedFaces != faces)
+        {
+            if (_wheelTexture != null) UnityEngine.Object.Destroy(_wheelTexture);   // the window is closed here: the old picture is not shown anywhere
+            _wheelTexture = WheelArt.Disc(384, faces);
+            _texturedFaces = faces;
+        }
         if (_pointerTexture == null) _pointerTexture = WheelArt.Pointer(48, 28);   // Unity check: a destroyed texture reads as null
         _window = _ui?.Custom.Window(w =>
         {

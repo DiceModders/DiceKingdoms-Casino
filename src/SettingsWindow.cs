@@ -38,6 +38,8 @@ internal static class SettingsWindow
         foreach (var (rule, _) in Casino.Numbers) rule.Changed += _ => Refresh();
         Casino.Rule.Changed += _ => Refresh();
         Core.Lobby.Changed += Refresh;   // the host can change, a match can start: who may edit changes with it
+        Core.Match.Started += Refresh;   // the rules are fixed for the match: nobody edits them now
+        Core.Match.Ended += Refresh;
         Tx.Block(ui, () => new SettingsBlockSpec
         {
             Id = Plugin.Guid + ".lobby",
@@ -132,9 +134,11 @@ internal static class SettingsWindow
         var faces = Wheel.Faces;
         if (_texture == null || _drawn != faces)
         {
+            var old = _texture;
             _texture = WheelArt.Disc(256, faces);
             _drawn = faces;
             _wheel?.SetTexture(_texture);
+            if (old != null) UnityEngine.Object.Destroy(old);   // a picture per click on a chance would pile up otherwise
             var picture = _wheel?.Root != null && _wheel.Root.childCount > 0 ? _wheel.Root.GetChild(0).gameObject : null;
             WheelArt.AddIcons(picture, faces, name => _ui?.Custom.Theme.Icon(name), 13f);
         }

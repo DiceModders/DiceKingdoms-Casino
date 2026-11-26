@@ -46,7 +46,7 @@ Every player in the match needs this mod (ModCore compares the mods in the lobby
 
 ## Install
 
-Needs BepInEx 6 (IL2CPP), [ModCore](https://github.com/DiceModders/DiceKingdoms-ModCore) 1.3.0 or newer, [UiKit](https://github.com/DiceModders/UiKit) and [ModBridge](https://github.com/DiceModders/DiceKingdoms-ModBridge). Put `DiceModders.Casino.dll` into `BepInEx\plugins`, with the game closed.
+Needs BepInEx 6 (IL2CPP), [ModCore](https://github.com/DiceModders/DiceKingdoms-ModCore) 1.3.1 or newer, [UiKit](https://github.com/DiceModders/UiKit) and [ModBridge](https://github.com/DiceModders/DiceKingdoms-ModBridge). Put `DiceModders.Casino.dll` into `BepInEx\plugins`, with the game closed.
 
 ## Build
 

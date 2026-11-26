@@ -41,7 +41,7 @@ internal static class CasinoType
         // never starts (2026-11-21). Give it the Market's number (1) before the game reads the table.
         patcher.Patch(typeof(PoolingBuffering.__c__DisplayClass4_0), "_Awake_b__0", typeof(CasinoType), prefix: nameof(PoolingPrefix));
         // one Casino per island by default where the host can limit buildings (the Building limits mod reads it; the host can change it)
-        Core.Buildings.SuggestLimit(Name, 1);
+        Core.Buildings.SuggestLimit(Name, 1, Casino.Rule);   // only while the Casino rule is on for everybody
         // the game's data may already be loaded (the type list made) before this mod: add it to what exists
         Core.Civilizations.GameDataLoaded += AddToExisting;
         AddToExisting();
@@ -188,6 +188,19 @@ internal static class CasinoType
             if (b.type != null && b.type.name == Name) return Building.Id.OfPosition(b.transform.position).value;
         }
         return -1;
+    }
+
+    /// <summary>The building with this id on the island is a Casino.</summary>
+    internal static bool IsCasino(IslandGrid grid, int id)
+    {
+        if (grid == null || id < 0) return false;
+        var e = grid.Buildings.GetEnumerator();
+        while (e.MoveNext())
+        {
+            var b = e.Current;
+            if (b.type != null && b.type.name == Name && Building.Id.OfPosition(b.transform.position).value == id) return true;
+        }
+        return false;
     }
 
     private static bool HasUniversity(IslandGrid grid)

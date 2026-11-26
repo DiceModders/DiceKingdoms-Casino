@@ -107,6 +107,9 @@ internal static class Wheel
         return s;
     }
 
+    /// <summary>A spin from an earlier turn waits for this disasters phase (normally the next turn's; a later one if that phase never came).</summary>
+    private static bool Due(IslandState state, int turn) => state.Pending >= 0 && state.Pending < turn;
+
     /// <summary>The face a seed gives (spread out, so it does not follow what the Starvation itself does with the seed).</summary>
     internal static int FaceOf(uint seed)
     {
@@ -127,7 +130,7 @@ internal static class Wheel
         var stats = island?.statistics;
         var game = data.GameState;
         if (grid == null || stats == null || game == null || island.Owner == null || island.Owner.IsAI) return false;
-        if (CasinoType.Find(grid) != casinoId) return false;
+        if (!CasinoType.IsCasino(grid, casinoId)) return false;   // any of the island's Casinos (the host may allow more than one); one wheel per island
         int turn = game.TurnCounter;
         var state = StateOf(grid);
         if (state.Pending >= 0 || turn - state.LastSpin < Cooldown) return false;
@@ -155,7 +158,7 @@ internal static class Wheel
             {
                 var owner = p.Game;
                 var grid = p.Island?.grid;
-                if (owner == null || grid == null || !States.TryGetValue(grid.Pointer, out var state) || state.Pending != turn - 1) continue;
+                if (owner == null || grid == null || !States.TryGetValue(grid.Pointer, out var state) || !Due(state, turn)) continue;
                 if (!SeedOf(__result, disasters, owner, out uint seed)) continue;
                 uint k = 1;
                 switch (Faces[FaceOf(seed)])
@@ -244,7 +247,7 @@ internal static class Wheel
                 var owner = p.Game;
                 var island = p.Island;
                 var grid = island?.grid;
-                if (owner == null || grid == null || !States.TryGetValue(grid.Pointer, out var state) || state.Pending != turn - 1) continue;
+                if (owner == null || grid == null || !States.TryGetValue(grid.Pointer, out var state) || !Due(state, turn)) continue;
                 state.Pending = -1;
                 if (!SeedOf(__0, disasters, owner, out uint seed)) continue;
                 int face = FaceOf(seed);
@@ -274,6 +277,7 @@ internal static class Wheel
         if (phase == null) return;
         var list = _heldList; var end = _heldEnd;
         _heldPhase = null; _heldList = null; _heldEnd = null;
+        if (!Core.Match.Running) return;   // the match ended while the wheel turned (the window closed with it): these disasters belong to no match now
         _replaying = true;
         try { phase.ExecuteOccurrences(list, end); }
         catch (Exception e) { Plugin.L.LogError("casino: the held disasters could not run: " + e); }

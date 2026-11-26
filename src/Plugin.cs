@@ -21,7 +21,7 @@ public sealed class Plugin : BasePlugin
 {
     public const string Guid = "org.dicemodders.dicekingdoms.casino";
     public const string Name = "DiceKingdoms Casino";
-    public const string Version = "1.0.1";
+    public const string Version = "1.0.2";
 
     internal static ManualLogSource L;
     /// <summary>The mod's own switch ([General] Enabled).</summary>
@@ -44,7 +44,7 @@ public sealed class Plugin : BasePlugin
         SettingsWindow.Install(ui);
         patcher.Summary();
 
-        Core.Mods.Switch(Config, description: "Turns the Casino rule of this mod on or off.")
+        Core.Mods.Switch(Config, affectsSimulation: true, description: "Turns the Casino rule of this mod on or off.")
             .WhenOn(() => { On = true; WheelWindow.Refresh(); }, () => { On = false; WheelWindow.Refresh(); });
     }
 
